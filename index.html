@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn the Tifinagh alphabet used for writing Amazigh (Berber) language with interactive tools and audio pronunciation.">
+    <meta property="og:title" content="Learn Amazigh Alphabets">
+    <meta property="og:description" content="Interactive learning tool for the Tifinagh script used in North Africa.">
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Tifinagh_IRCAM.png/500px-Tifinagh_IRCAM.png">
+    <title>Learn Amazigh Alphabets</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a6e; /* Deep blue */
+            --primary-light: #3a5e97;
+            --secondary: #e65100; /* Vibrant orange */
+            --secondary-light: #ff8a50;
+            --accent: #5d1049; /* Deep purple accent */
+            --background: #f8f9fa;
+            --dark: #111111;
+            --text: #333333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%231a3a6e' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 30px 0;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            margin-bottom: 20px;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            z-index: -1;
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        header nav {
+            margin-top: 20px;
+        }
+
+        header nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        header nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        header nav ul li a:hover,
+        header nav ul li a.active {
+            color: var(--secondary-light);
+        }
+
+        header nav ul li a:hover::after,
+        header nav ul li a.active::after {
+            width: 100%;
+        }
+
+        main {
+            padding: 40px 0;
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            font-weight: 800;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 6px;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        section {
+            padding: 60px 0;
+            position: relative;
+        }
+
+        /* Introduction section styling */
+        .intro-content {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            border-top: 5px solid var(--primary);
+        }
+
+        .intro-text {
+            flex: 1;
+        }
+
+        .intro-text p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .intro-image {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .intro-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(26, 58, 110, 0.2);
+            border: 5px solid white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .intro-image::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            z-index: 1;
+        }
+
+        /* Alphabet grid styling */
+        .alphabet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .alphabet-tile {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+        }
+
+        .alphabet-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .alphabet-tile:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(26, 58, 110, 0.15);
+        }
+
+        .alphabet-tile:hover::before {
+            transform: scaleX(1);
+        }
+
+        .alphabet-letter {
+            font-size: 46px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .alphabet-tile:hover .alphabet-letter {
+            transform: scale(1.15);
+            color: var(--primary-light);
+        }
+
+        .alphabet-name {
+            font-size: 15px;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Practice section styling */
+        .practice-area {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            padding: 50px;
+            text-align: center;
+            border-top: 5px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .letter-display {
+            margin-bottom: 40px;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(248, 249, 250, 0.7);
+            position: relative;
+            z-index: 1;
+        }
+
+        #current-letter {
+            font-size: 140px;
+            line-height: 1;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: letterPulse 3s infinite alternate;
+        }
+
+        @keyframes letterPulse {
+            0% { transform: scale(1) translateY(0px); }
+            100% { transform: scale(1.05) translateY(-10px); }
+        }
+
+        #letter-name {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #letter-sound {
+            font-size: 18px;
+            color: #666;
+            font-style: italic;
+            padding: 6px 18px;
+            display: inline-block;
+            border-radius: 50px;
+            background-color: rgba(248, 249, 250, 0.8);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .practice-controls {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        button {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(26, 58, 110, 0.2);
+        }
+
+        button:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(26, 58, 110, 0.3);
+        }
+
+        #play-sound {
+            background: var(--secondary);
+        }
+
+        #play-sound:hover {
+            background: var(--secondary-light);
+            box-shadow: 0 10px 20px rgba(230, 81, 0, 0.3);
+        }
+
+        .audio-status {
+            margin-top: 25px;
+            height: 20px;
+            font-size: 16px;
+            color: #666;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .audio-status.playing {
+            color: var(--secondary);
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        .loading-overlay p {
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Footer styling */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+            clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        footer p {
+            margin: 0;
+            padding-top: 30px;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: var(--secondary-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        #letter-count {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+            
+            .intro-content {
+                flex-direction: column;
+                padding: 25px;
+            }
+            
+            .alphabet-grid {
+                grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+                gap: 15px;
+            }
+            
+            .practice-controls {
+                flex-wrap: wrap;
+            }
+            
+            #current-letter {
+                font-size: 100px;
+            }
+            
+            .practice-area {
+                padding: 30px 20px;
+            }
+            
+            section {
+                padding: 40px 0;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            footer {
+                clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .alphabet-grid {
+                grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+                gap: 12px;
+            }
+            
+            .alphabet-letter {
+                font-size: 32px;
+            }
+            
+            #current-letter {
+                font-size: 80px;
+            }
+        }
+
+        .image-error {
+            color: #e65100;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px dashed #e65100;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Learn Amazigh Alphabets</h1>
+            <nav>
+                <ul>
+                    <li><a href="#introduction" class="active">Introduction</a></li>
+                    <li><a href="#alphabet">Alphabet</a></li>
+                    <li><a href="#practice">Practice</a></li>
+                    <li><a href="tts-demo.html">TTS Demo</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="introduction" class="container">
+            <h2>Introduction to Amazigh Script</h2>
+            <div class="intro-content">
+                <div class="intro-text">
+                    <p>The Amazigh language (also known as Berber) is written in the Tifinagh alphabet. This ancient script has been modernized and standardized as Neo-Tifinagh for use across North Africa, particularly in Morocco, Algeria, and other regions with Amazigh populations.</p>
+                    <p>This website will help you learn the Tifinagh alphabet through interactive lessons and practice exercises.</p>
+                </div>
+                <div class="intro-image">
+                    <img src="tifinagh-text.png" 
+                         alt="Tifinagh Script Example" 
+                         width="400"
+                         onerror="this.onerror=null; handleImageError(this);">
+                </div>
+            </div>
+        </section>
+
+        <section id="alphabet" class="container">
+            <h2>The Tifinagh Alphabet</h2>
+            <div class="alphabet-grid" id="alphabet-grid">
+                <!-- Alphabet tiles will be generated by JavaScript -->
+            </div>
+        </section>
+
+        <section id="practice" class="container">
+            <h2>Practice</h2>
+            <div class="practice-area">
+                <div class="letter-display">
+                    <div id="current-letter">ⵉ</div>
+                    <p id="letter-name">Yaz</p>
+                    <p id="letter-sound">[i] as in "see"</p>
+                </div>
+                <div class="practice-controls">
+                    <button id="prev-letter">Previous</button>
+                    <button id="play-sound">Play Sound</button>
+                    <button id="next-letter">Next</button>
+                </div>
+                <div id="audio-status" class="audio-status"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="container">
+        <p>&copy; 2023 Learn Amazigh Alphabets | <a href="#" id="about-link">About</a> | <span id="letter-count">39 letters</span></p>
+    </footer>
+
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p>Loading audio...</p>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function handleImageError(img) {
+            console.error('Failed to load image: ' + img.src);
+            
+            // Try alternative image formats
+            if (img.src.endsWith('png')) {
+                img.src = 'tifinagh-text.jpg';
+            } else if (img.src.endsWith('jpg')) {
+                img.src = 'tifinagh-text.jpeg';
+            } else {
+                // Final fallback - use a placeholder or a data URI
+                img.src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22400%22 height%3D%22300%22 viewBox%3D%220 0 400 300%22%3E%3Crect width%3D%22400%22 height%3D%22300%22 fill%3D%22%23f0f0f0%22%2F%3E%3Ctext x%3D%22100%22 y%3D%22150%22 font-family%3D%22Arial%22 font-size%3D2220%22 fill%3D%22%23333%22%3ETifinagh Text Image%3C%2Ftext%3E%3C%2Fsvg%3E';
+                
+                // Add an error message
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'image-error';
+                errorDiv.innerHTML = '<p>Image could not be loaded.<br>Please ensure "tifinagh-text.png" is in the same folder as this HTML file.</p>';
+                errorDiv.style.color = '#e65100';
+                errorDiv.style.marginTop = '10px';
+                errorDiv.style.padding = '10px';
+                errorDiv.style.border = '1px dashed #e65100';
+                errorDiv.style.borderRadius = '5px';
+                
+                img.parentNode.appendChild(errorDiv);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Log for debugging purposes
+            console.log('Attempting to load Tifinagh text image...');
+        });
+    </script>
+</body>
+</html>
+
+

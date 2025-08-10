@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Try the Amazigh Text-to-Speech model powered by Hugging Face.">
+    <meta property="og:title" content="Amazigh Text-to-Speech Demo">
+    <meta property="og:description" content="Convert Tifinagh script to spoken Amazigh using advanced AI models.">
+    <title>Amazigh TTS Demo - Learn Amazigh Alphabets</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a6e; /* Deep blue */
+            --primary-light: #3a5e97;
+            --secondary: #e65100; /* Vibrant orange */
+            --secondary-light: #ff8a50;
+            --accent: #5d1049; /* Deep purple accent */
+            --background: #f8f9fa;
+            --dark: #111111;
+            --text: #333333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%231a3a6e' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 30px 0;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            margin-bottom: 20px;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            z-index: -1;
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        header nav {
+            margin-top: 20px;
+        }
+
+        header nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        header nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        header nav ul li a:hover,
+        header nav ul li a.active {
+            color: var(--secondary-light);
+        }
+
+        header nav ul li a:hover::after,
+        header nav ul li a.active::after {
+            width: 100%;
+        }
+
+        main {
+            padding: 40px 0;
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            font-weight: 800;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 6px;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .app-info, .model-info {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            border-top: 5px solid var(--primary);
+        }
+
+        .app-info {
+            border-top: 5px solid var(--primary);
+        }
+
+        .model-info {
+            border-top: 5px solid var(--secondary);
+            margin-top: 40px;
+        }
+
+        .app-info h3, .model-info h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+        }
+
+        .app-info h3::after, .model-info h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            bottom: -10px;
+            left: 0;
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+
+        .app-info p, .model-info li, .model-info p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 15px;
+        }
+
+        .model-info ol {
+            padding-left: 25px;
+            margin-bottom: 25px;
+        }
+
+        .model-info li {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .model-info li::marker {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+            clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        footer p {
+            margin: 0;
+            padding-top: 30px;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: var(--secondary-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 40px 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            background: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .iframe-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .responsive-iframe {
+            width: 100%;
+            height: 650px;
+            border: none;
+            display: block;
+        }
+
+        .iframe-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+        }
+
+        .iframe-loading p {
+            margin-top: 20px;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(26, 58, 110, 0.2);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Styling for callout boxes */
+        .feature-callout {
+            background: linear-gradient(135deg, rgba(26, 58, 110, 0.05) 0%, rgba(230, 81, 0, 0.05) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin: 25px 0;
+        }
+
+        .feature-callout strong {
+            color: var(--primary);
+        }
+
+        /* Button styling */
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(26, 58, 110, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary-light);
+            box-shadow: 0 10px 20px rgba(230, 81, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+            
+            .responsive-iframe {
+                height: 500px;
+            }
+            
+            .app-info, .model-info {
+                padding: 25px;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            footer {
+                clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Learn Amazigh Alphabets</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html#introduction">Introduction</a></li>
+                    <li><a href="index.html#alphabet">Alphabet</a></li>
+                    <li><a href="index.html#practice">Practice</a></li>
+                    <li><a href="tts-demo.html" class="active">TTS Demo</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="tts-demo" class="container">
+            <h2>Text-to-Speech Demo</h2>
+            
+            <div class="app-info">
+                <h3>About this Demo</h3>
+                <p>This interactive demo allows you to convert Amazigh text into natural-sounding speech using advanced AI technology.</p>
+                <p>The model can process text in Tifinagh script and generate high-quality audio output. Type your text in the interface below and listen to the result.</p>
+                
+                <div class="feature-callout">
+                    <strong>Pro tip:</strong> For best results, try using complete sentences and proper punctuation to help the model generate more natural-sounding speech.
+                </div>
+            </div>
+
+            <div class="iframe-container">
+                <div class="iframe-loading" id="loading-message">
+                    <div class="loading-spinner"></div>
+                    <p>Loading Text-to-Speech demo...</p>
+                </div>
+                
+                <iframe 
+                    src="https://ayymen-amazigh-tts.hf.space" 
+                    class="responsive-iframe"
+                    frameborder="0"
+                    onload="document.getElementById('loading-message').style.display='none';"
+                    allow="microphone; camera"
+                    title="Amazigh Text-to-Speech Demo">
+                </iframe>
+            </div>
+
+            <div class="model-info">
+                <h3>How to Use</h3>
+                <ol>
+                    <li>Type or paste Amazigh text in the input field</li>
+                    <li>Click the "Submit" button</li>
+                    <li>Wait for the model to process your text</li>
+                    <li>Listen to the generated speech output</li>
+                </ol>
+                <p>This demo is powered by Hugging Face Spaces and uses the Meta AI MMS-TTS model fine-tuned for Amazigh language.</p>
+                
+                <a href="https://huggingface.co/facebook/mms-tts-ttq-script_tifinagh" class="btn" target="_blank">Learn More About the Model</a>
+                <a href="index.html#alphabet" class="btn btn-secondary">Explore Tifinagh Alphabet</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="container">
+        <p>&copy; 2023 Learn Amazigh Alphabets | <a href="#" id="about-link">About</a> | <span id="letter-count">39 letters</span></p>
+    </footer>
+
+    <script src="tts-script.js"></script>
+</body>
+</html>
